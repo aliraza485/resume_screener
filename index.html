@@ -272,8 +272,11 @@
                         </h2>
                         <p class="text-xs text-slate-400 mt-0.5">Securely logged in your SQLite database.</p>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <a href="http://127.0.0.1:8000/api/export/csv" target="_blank" class="px-3.5 py-2 text-xs font-semibold bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 rounded-xl transition-all flex items-center gap-2 cursor-pointer">
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <button onclick="clearDatabase()" class="px-3.5 py-2 text-xs font-semibold bg-rose-600/20 hover:bg-rose-600/30 text-rose-300 border border-rose-500/30 rounded-xl transition-all flex items-center gap-2 cursor-pointer" title="Wipe all past history">
+                            <i class="fa-solid fa-trash-can"></i> Clear DB
+                        </button>
+                        <a href="/export/csv" target="_blank" class="px-3.5 py-2 text-xs font-semibold bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 rounded-xl transition-all flex items-center gap-2 cursor-pointer">
                             <i class="fa-solid fa-file-csv"></i> Export CSV
                         </a>
                         <button onclick="loadHistory()" class="px-3.5 py-2 text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl transition-all flex items-center gap-2 cursor-pointer">
@@ -574,6 +577,19 @@
                 `).join('');
             } catch (err) {
                 container.innerHTML = `<p class="text-sm text-rose-400">Error connecting to database endpoint.</p>`;
+            }
+        }
+
+        async function clearDatabase() {
+            if (!confirm("Are you sure you want to clear all evaluation history? This action cannot be undone.")) return;
+            try {
+                const response = await fetch(`${API_BASE}/admin/reset-database`, { method: 'DELETE' });
+                if (!response.ok) throw new Error("Failed to clear database.");
+                const data = await response.json();
+                alert(data.message || "Database cleared successfully!");
+                loadHistory(); // Refresh view
+            } catch (err) {
+                alert(err.message || "Error clearing database.");
             }
         }
 

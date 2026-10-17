@@ -136,6 +136,25 @@ async def get_screening_history(db: Session = Depends(get_db)):
         
     return history_list
 
+@router.delete("/admin/reset-database")
+async def reset_database(db: Session = Depends(get_db)):
+    """
+    Clears all past candidate evaluation history from the database.
+    """
+    try:
+        num_deleted = db.query(EvaluationDB).delete()
+        db.commit()
+        return {
+            "success": True,
+            "message": f"Database successfully cleared! Deleted {num_deleted} past evaluation records."
+        }
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to reset database: {str(e)}"
+        )
+
 @router.get("/export/csv")
 async def export_evaluations_csv(db: Session = Depends(get_db)):
     """

@@ -34,13 +34,13 @@ git clone [https://github.com/aliraza485/resume_screener.git](https://github.com
 cd resume_screener
 
 ### 2. Create and Activate Virtual Environment
-# Create a virtual environment named 'myenv'
+Create a virtual environment named 'myenv'
 python -m venv myenv
 
-# Activate on Windows (PowerShell / Command Prompt):
+Activate on Windows (PowerShell / Command Prompt):
 myenv\Scripts\activate
 
-# Activate on macOS / Linux:
+Activate on macOS / Linux:
 source myenv/bin/activate
 
 ### 3. Install Dependencies

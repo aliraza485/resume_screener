@@ -1,14 +1,18 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 import os
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = FastAPI(title="TalentAI Resume Screener")
 
 # Enable CORS for frontend communication
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins (restrict to your domain in production if needed)
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -17,20 +21,32 @@ app.add_middleware(
 # Serve the frontend dashboard at the root URL
 @app.get("/", response_class=HTMLResponse)
 async def read_root():
-    # Adjust path if index.html is in the project root directory (one level up from app/)
-    # If index.html is in the same folder as main.py, use "index.html" directly.
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    html_path = os.path.join(base_dir, "..", "index.html") # Change to os.path.join(base_dir, "index.html") if index.html is inside app/
+    # Check multiple possible locations for index.html depending on Render's build structure
+    possible_paths = [
+        os.path.join(os.getcwd(), "index.html"),
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "index.html"),
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), "index.html")
+    ]
     
-    if not os.path.exists(html_path):
-        # Fallback to current working directory check
-        html_path = "index.html"
+    html_path = None
+    for path in possible_paths:
+        normalized_path = os.path.normpath(path)
+        logger.info(f"Checking path for index.html: {normalized_path}")
+        if os.path.exists(normalized_path):
+            html_path = normalized_path
+            break
 
-    if os.path.exists(html_path):
+    if html_path and os.path.exists(html_path):
+        logger.info(f"Serving index.html from: {html_path}")
         return FileResponse(html_path)
     
-    return "<h1>Frontend index.html not found</h1>"
+    logger.error("index.html not found in any expected location.")
+    raise HTTPException(status_code=404, detail="Frontend index.html not found on server.")
 
 # Include your API router from endpoints.py
-from app.api.endpoints import router as screening_router
-app.include_router(screening_router)
+try:
+    from app.api.endpoints import router as screening_router
+    app.include_router(screening_router)
+    logger.info("Successfully loaded screening_router.")
+except Exception as e:
+    logger.error(f"Failed to load screening_router: {e}")

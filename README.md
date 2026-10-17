@@ -36,3 +36,37 @@ resume_screener/
 ├── index.html               # Tailwind CSS frontend dashboard
 ├── requirements.txt         # Project Python dependencies
 └── README.md
+## ⚙️ Local Installation & Setup
+
+Follow these steps to set up and run the project locally on your machine:
+
+### Prerequisites
+Make sure you have **Python 3.10 or higher** installed on your system.
+
+### 1. Clone the Repository
+```bash
+git clone [https://github.com/aliraza485/resume_screener.git](https://github.com/aliraza485/resume_screener.git)
+cd resume_screener
+
+### 2. Create and Activate Virtual Environment
+# Create a virtual environment named 'myenv'
+python -m venv myenv
+
+# Activate on Windows (PowerShell / Command Prompt):
+myenv\Scripts\activate
+
+# Activate on macOS / Linux:
+source myenv/bin/activate
+
+### 3. Install Dependencies
+pip install -r requirements.txt
+
+### 4. Configure Environment Variables
+OPENAI_API_KEY=your_actual_openai_api_key_here
+
+### 5. Run the Application
+uvicorn app.main:app --reload
+
+### 6. Access the Application
+Open your web browser and go to:
+👉 http://127.0.0.1:8000

@@ -18,7 +18,7 @@ from app.database import SessionLocal, EvaluationDB
 # ==========================================
 # 1. INITIALIZE ROUTER FIRST (Crucial Step)
 # ==========================================
-router = APIRouter(prefix="/api", tags=["Resume Screening"])
+router = APIRouter()
 
 # Dependency to get database session
 def get_db():

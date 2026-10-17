@@ -10,7 +10,6 @@ TalentAI is a full-stack, intelligent recruitment platform designed to automate 
 * **Side-by-Side Candidate Comparison**: Compares multiple candidates simultaneously using LLMs to highlight key differentiators and identify the overall best fit.
 * **Automated PDF Export**: Leverages ReportLab to export clean, structured individual evaluation summaries and comparative reports.
 * **Interactive UI**: Clean, responsive frontend styled with Tailwind CSS, backed by a robust FastAPI asynchronous backend.
-* **Vector & RAG Capabilities**: Built with modern AI architectures utilizing embeddings and similarity search foundations.
 
 ---
 

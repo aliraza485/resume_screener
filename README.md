@@ -21,21 +21,6 @@ TalentAI is a full-stack, intelligent recruitment platform designed to automate 
 * **Document Processing & Reporting**: ReportLab, PyPDF, Python-Docx
 * **Frontend**: HTML5, Tailwind CSS, JavaScript
 
----
-
-## 📂 Project Architecture
-
-```text
-resume_screener/
-│
-├── app/
-│   ├── api/
-│   │   └── endpoints.py     # Core API logic, evaluation & PDF export routes
-│   └── main.py              # FastAPI app initialization & static frontend routing
-│
-├── index.html               # Tailwind CSS frontend dashboard
-├── requirements.txt         # Project Python dependencies
-└── README.md
 ## ⚙️ Local Installation & Setup
 
 Follow these steps to set up and run the project locally on your machine:
@@ -44,7 +29,7 @@ Follow these steps to set up and run the project locally on your machine:
 Make sure you have **Python 3.10 or higher** installed on your system.
 
 ### 1. Clone the Repository
-```bash
+
 git clone [https://github.com/aliraza485/resume_screener.git](https://github.com/aliraza485/resume_screener.git)
 cd resume_screener
 
@@ -70,3 +55,19 @@ uvicorn app.main:app --reload
 ### 6. Access the Application
 Open your web browser and go to:
 👉 http://127.0.0.1:8000
+
+---
+
+## 📂 Project Architecture
+
+```text
+resume_screener/
+│
+├── app/
+│   ├── api/
+│   │   └── endpoints.py     # Core API logic, evaluation & PDF export routes
+│   └── main.py              # FastAPI app initialization & static frontend routing
+│
+├── index.html               # Tailwind CSS frontend dashboard
+├── requirements.txt         # Project Python dependencies
+└── README.md
